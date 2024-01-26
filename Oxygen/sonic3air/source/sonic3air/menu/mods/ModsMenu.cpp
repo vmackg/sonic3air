@@ -181,13 +181,15 @@ void ModsMenu::initialize()
 				Bitmap icon16px;
 				Bitmap icon64px;
 				{
-					FileHelper::loadBitmap(icon16px, modEntry.mMod->mFullPath + L"icon-16px.png", false);
-					FileHelper::loadBitmap(icon64px, modEntry.mMod->mFullPath + L"icon-64px.png", false);
+					FileHelper::loadBitmap(icon16px, modEntry.mMod->mFullPath + modEntry.mMod->mIcon16Path, false);
+					FileHelper::loadBitmap(icon64px, modEntry.mMod->mFullPath + modEntry.mMod->mIcon64Path, false);
 					if (icon64px.empty())
 						FileHelper::loadBitmap(icon64px, modEntry.mMod->mFullPath + L"icon.png", false);
 				}
 
 				Bitmap* sourceLarge = !icon64px.empty() ? &icon64px : !icon16px.empty() ? &icon16px : nullptr;
+				Bitmap* sourceSmall = !icon16px.empty() ? &icon16px : !icon64px.empty() ? &icon64px : nullptr;
+
 				if (nullptr != sourceLarge)
 				{
 					EngineMain::instance().getDrawer().createTexture(res.mLargeIcon);
@@ -195,7 +197,6 @@ void ModsMenu::initialize()
 					res.mLargeIcon.bitmapUpdated();
 				}
 
-				Bitmap* sourceSmall = !icon16px.empty() ? &icon16px : !icon64px.empty() ? &icon64px : nullptr;
 				if (nullptr != sourceSmall)
 				{
 					EngineMain::instance().getDrawer().createTexture(res.mSmallIcon);

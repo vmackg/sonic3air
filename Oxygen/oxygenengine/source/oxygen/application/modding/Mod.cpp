@@ -24,6 +24,9 @@ void Mod::loadFromJson(const Json::Value& json)
 		jsonHelper.tryReadString("Author", mAuthor);
 		jsonHelper.tryReadString("Description", mDescription);
 		jsonHelper.tryReadString("URL", mURL);
+
+		jsonHelper.tryReadString("Icon64", mIcon64Path);
+		jsonHelper.tryReadString("Icon16", mIcon16Path);
 	}
 
 	// Fallback for names
@@ -31,6 +34,10 @@ void Mod::loadFromJson(const Json::Value& json)
 		mDisplayName = mDirectoryName;
 	if (mUniqueID.empty())
 		mUniqueID = mDirectoryName;
+	if (mIcon16Path.empty())
+		mIcon16Path = L"icon-16px.png";
+	if (mIcon64Path.empty())
+		mIcon64Path = L"icon-64px.png";
 
 	// Read settings
 	Json::Value settingsJson = json["Settings"];
