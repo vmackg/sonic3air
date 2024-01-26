@@ -69,6 +69,7 @@ public:
 	std::wstring mFullPath;				// Complete path, now including the trailing slash, e.g. "<savedatadir>/mods/modfolder/my-sample-mod/"
 	std::wstring mIcon64Path;
 	std::wstring mIcon16Path;
+	std::wstring mAuthorIcon;
 	uint64 mLocalDirectoryHash = 0;
 	State mState = State::INACTIVE;
 	std::string mFailedMessage;

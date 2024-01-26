@@ -27,6 +27,7 @@ void Mod::loadFromJson(const Json::Value& json)
 
 		jsonHelper.tryReadString("Icon64", mIcon64Path);
 		jsonHelper.tryReadString("Icon16", mIcon16Path);
+		jsonHelper.tryReadString("AuthorIcon", mAuthorIcon);
 	}
 
 	// Fallback for names

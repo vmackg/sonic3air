@@ -180,15 +180,20 @@ void ModsMenu::initialize()
 				// Load icons
 				Bitmap icon16px;
 				Bitmap icon64px;
+				Bitmap AuthorIcon32px;
+
 				{
 					FileHelper::loadBitmap(icon16px, modEntry.mMod->mFullPath + modEntry.mMod->mIcon16Path, false);
 					FileHelper::loadBitmap(icon64px, modEntry.mMod->mFullPath + modEntry.mMod->mIcon64Path, false);
 					if (icon64px.empty())
 						FileHelper::loadBitmap(icon64px, modEntry.mMod->mFullPath + L"icon.png", false);
+
+					FileHelper::loadBitmap(AuthorIcon32px, modEntry.mMod->mFullPath + modEntry.mMod->mAuthorIcon, false);
 				}
 
 				Bitmap* sourceLarge = !icon64px.empty() ? &icon64px : !icon16px.empty() ? &icon16px : nullptr;
 				Bitmap* sourceSmall = !icon16px.empty() ? &icon16px : !icon64px.empty() ? &icon64px : nullptr;
+				Bitmap* authorIcon = !AuthorIcon32px.empty() ? &AuthorIcon32px : nullptr;
 
 				if (nullptr != sourceLarge)
 				{
@@ -217,6 +222,13 @@ void ModsMenu::initialize()
 						}
 						res.mSmallIconGray.bitmapUpdated();
 					}
+				}
+
+				if (nullptr != authorIcon)
+				{
+					EngineMain::instance().getDrawer().createTexture(res.mAuthorIcon);
+					res.mAuthorIcon.accessBitmap().rescale(*authorIcon, 32, 32);
+					res.mAuthorIcon.bitmapUpdated();
 				}
 			}
 		}
@@ -819,6 +831,17 @@ void ModsMenu::render()
 					drawer.drawRect(iconRect, texture, colorW);
 				}
 
+				//Author's image
+				DrawerTexture& authorTexture = modEntry->mModResources->mAuthorIcon;
+				if (authorTexture.isValid())
+				{
+					const Recti iconRect(rect.x + 12, rect.y + 90, 32, 32);
+					drawer.drawRect(iconRect, authorTexture, colorW);
+				}
+
+				if (!modEntry->mMod->mAuthor.empty())
+					drawer.printText(global::mOxyfontNarrow, rect + Vec2i(12, 130), "Made by " + modEntry->mMod->mAuthor, 1, colorY);
+
 				// Text
 				rect.addPos(90, 14);
 				rect.width -= 100;
@@ -831,11 +854,7 @@ void ModsMenu::render()
 					drawer.printText(global::mOxyfontRegular, rect, modEntry->mMod->mDisplayName, 1, colorY2);
 					rect.y += 19;
 				}
-				if (!modEntry->mMod->mAuthor.empty())
-				{
-					drawer.printText(global::mOxyfontSmallNoOutline, rect + Vec2i(8, 0), "by " + modEntry->mMod->mAuthor, 1, colorY);
-					rect.y += 15;
-				}
+
 				if (!modEntry->mMod->mModVersion.empty())
 				{
 					drawer.printText(global::mOxyfontSmallNoOutline, rect + Vec2i(8, 0), "Version " + modEntry->mMod->mModVersion, 1, colorY);

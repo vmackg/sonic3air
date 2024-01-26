@@ -16,4 +16,5 @@ struct ModResources
 	DrawerTexture mLargeIcon;
 	DrawerTexture mSmallIcon;
 	DrawerTexture mSmallIconGray;
+	DrawerTexture mAuthorIcon;
 };
