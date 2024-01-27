@@ -68,8 +68,8 @@ public:
 	std::wstring mLocalDirectory;		// Local path inside mods directory, excluding the trailing slash, e.g. "my-sample-mod" or "modfolder/my-sample-mod"
 	std::wstring mFullPath;				// Complete path, now including the trailing slash, e.g. "<savedatadir>/mods/modfolder/my-sample-mod/"
 	std::wstring mIcon64Path;
-	std::wstring mIcon16Path;
-	std::wstring mAuthorIcon;
+	std::wstring mIcon16Path;			//Those three are optional
+	std::wstring mAuthorIconPath;
 	uint64 mLocalDirectoryHash = 0;
 	State mState = State::INACTIVE;
 	std::string mFailedMessage;

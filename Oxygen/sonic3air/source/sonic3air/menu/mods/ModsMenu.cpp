@@ -188,7 +188,9 @@ void ModsMenu::initialize()
 					if (icon64px.empty())
 						FileHelper::loadBitmap(icon64px, modEntry.mMod->mFullPath + L"icon.png", false);
 
-					FileHelper::loadBitmap(AuthorIcon32px, modEntry.mMod->mFullPath + modEntry.mMod->mAuthorIcon, false);
+					FileHelper::loadBitmap(AuthorIcon32px, modEntry.mMod->mFullPath + modEntry.mMod->mAuthorIconPath, false);
+					if (AuthorIcon32px.empty())
+						FileHelper::loadBitmap(AuthorIcon32px, modEntry.mMod->mFullPath + L"author.png", false);
 				}
 
 				Bitmap* sourceLarge = !icon64px.empty() ? &icon64px : !icon16px.empty() ? &icon16px : nullptr;
