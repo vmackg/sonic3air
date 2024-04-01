@@ -13,6 +13,7 @@
 #include "oxygen/rendering/utils/Kosinski.h"
 #include "oxygen/simulation/EmulatorInterface.h"
 #include "oxygen/simulation/RuntimeEnvironment.h"
+#include "oxygen/application/modding/ModManager.h"
 
 #include <lemon/program/FunctionWrapper.h>
 #include <lemon/program/Module.h>
@@ -111,6 +112,11 @@ namespace s3air
 		}
 	}
 
+	bool CheckForDevMode()
+	{
+		return Configuration::instance().mDevMode.mEnabled;
+	}
+
 }
 
 
@@ -127,6 +133,9 @@ void ScriptImplementations::registerScriptBindings(lemon::Module& module)
 		.setParameterInfo(0, "input")
 		.setParameterInfo(1, "count")
 		.setParameterInfo(2, "value");
+
+	module.addNativeFunction("CheckForDevMode", lemon::wrap(&s3air::CheckForDevMode), defaultFlags);
+
 
 	// TEST!
 	module.addNativeFunction("uncompressKosinskiData", lemon::wrap(&s3air::decompressKosinskiData), defaultFlags)
